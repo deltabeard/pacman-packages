@@ -1,0 +1,41 @@
+# Maintainer:  Mahyar Koshkouei <mk@deltabeard.com>
+
+pkgname=3ds-opusfile
+pkgver=0.10
+pkgrel=1
+pkgdesc='Library for opening, seeking, and decoding .opus files'
+arch=('any')
+url='https://opus-codec.org/'
+license=(BSD)
+options=(!strip libtool staticlibs)
+depends=('3ds-libogg' '3ds-opus')
+source=("https://downloads.xiph.org/releases/opus/opusfile-$pkgver.tar.gz"
+        "$pkgname.patch")
+sha256sums=('48e03526ba87ef9cf5f1c47b5ebe3aa195bd89b912a57060c36184a6cd19412f'
+            '7dc7508ab7a32d7189909c47c6c70c51aa5f751071a281b47668e47ceb8d97b9')
+makedepends=('3ds-pkg-config' 'devkitpro-pkgbuild-helpers')
+
+prepare() {
+  cd opusfile-$pkgver
+  patch -p1 -i "${srcdir}/$pkgname.patch"
+}
+
+build() {
+  cd opusfile-$pkgver
+
+  source /opt/devkitpro/devkitarm.sh
+  source /opt/devkitpro/3dsvars.sh
+
+  ./configure \
+    --prefix="${PORTLIBS_PREFIX}" \
+    --host="arm-none-eabi" \
+    --disable-shared --enable-static 
+
+  make
+}
+
+package() {
+  cd opusfile-$pkgver
+
+  make DESTDIR="$pkgdir" install
+}

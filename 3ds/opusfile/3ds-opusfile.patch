@@ -1,0 +1,12 @@
+diff -ura opusfile-0.10/include/opusfile.h	opusfile-0.10/include/opusfile.h
+--- opusfile-0.10/include/opusfile.h		2017-08-03 01:27:06.000000000 +0100
++++ opusfile-0.10/include/opusfile.h		2018-07-06 20:41:17.015320806 +0100
+@@ -107,7 +107,7 @@
+ # include <stdarg.h>
+ # include <stdio.h>
+ # include <ogg/ogg.h>
+-# include <opus_multistream.h>
++# include <opus/opus_multistream.h>
+ 
+ /**@cond PRIVATE*/
+ 
